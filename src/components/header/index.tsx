@@ -1,74 +1,66 @@
 'use client';
 import React, { use } from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
+import Image from "next/image";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+    { name: 'Feature', link: '#Feature' },
+    { name: 'Pricing', link: '#Pricing' },
+    { name: 'FAQ', link: '#FAQ' },
+  ]
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="xl">
+    <Navbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="xl" className="border-b border-slate-400/10">
       <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden mr-5"
+        />
         <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
+          <Link href="/">
+            <Image src="/logo.png" alt="Logo" width={36} height={36} className="cursor-pointer" />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
+        {menuItems.map((item, index) => (
+          <NavbarItem key={`${item}-${index}`}>
+            <Link color="foreground" href={item.link}>
+              {item.name}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden md:flex">
-          <Link href="#">Login</Link>
+        <NavbarItem>
+          <Dropdown>
+            <DropdownTrigger className="cursor-pointer">
+              <Link color="foreground" className="hover:text-cyan-800">
+                <Image src="/icons/language.svg" alt="Avatar" width={24} height={24} />
+                <span>English</span>
+              </Link>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem key="new">中文简体</DropdownItem>
+              <DropdownItem key="copy">English</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="md:hidden"
-        />
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+          <NavbarMenuItem key={`${item}-${index}`} onClick={() => setIsMenuOpen(false)}>
             <Link
-              color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
-              }
+              color="foreground"
               className="w-full"
-              href="#"
-              size="lg"
+              href={item.link}
+              onClick={() => setIsMenuOpen(false)}
             >
-              {item}
+              {item.name}
             </Link>
           </NavbarMenuItem>
         ))}

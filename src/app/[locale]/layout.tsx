@@ -13,10 +13,6 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
-
   return (
     <html lang={locale}>
       <body>
@@ -24,7 +20,7 @@ export default async function LocaleLayout({
           <Header />
         </header>
         <Providers>
-          <div className='max-w-screen-xl w-full relative mx-auto px-6 min-h-screen'>
+          <div className='max-w-screen-xl w-full relative mx-auto px-6' style={{ minHeight: 'calc(100vh - 56px - 56px - 20px)' }}>
             {children}
           </div>
         </Providers>
