@@ -2,6 +2,8 @@
 import React, { use } from "react";
 import Image from "next/image";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -11,6 +13,9 @@ export default function App() {
     { name: 'Pricing', link: '#Pricing' },
     { name: 'FAQ', link: '#FAQ' },
   ]
+  const changeLanguage = (lang:string) => {
+    console.log(lang)
+  };
 
   return (
     <Navbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="xl" className="border-b border-slate-400/10">
@@ -45,8 +50,8 @@ export default function App() {
               </Link>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="new">中文简体</DropdownItem>
-              <DropdownItem key="copy">English</DropdownItem>
+              <DropdownItem key="zh" onClick={()=>changeLanguage('zh')}>中文简体</DropdownItem>
+              <DropdownItem key="en" onClick={()=>changeLanguage('en')}>English</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>

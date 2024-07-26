@@ -5,7 +5,6 @@ import Footer from '@/components/footer';
 import { Providers } from './providers';
 import '@/globals.css';
 
-
 export default async function LocaleLayout({
   children,
   params: { locale }
