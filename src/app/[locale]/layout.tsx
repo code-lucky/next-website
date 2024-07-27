@@ -16,7 +16,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <header>
-          <Header />
+          <Header locale={locale}/>
         </header>
         <Providers>
           <div className='max-w-screen-xl w-full relative mx-auto px-6' style={{ minHeight: 'calc(100vh - 56px - 56px - 20px)' }}>

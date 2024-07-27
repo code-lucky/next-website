@@ -1,20 +1,26 @@
 'use client';
-import React, { use } from "react";
+import React, { use, useEffect } from "react";
 import Image from "next/image";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, user } from "@nextui-org/react";
+import { useRouter } from 'next/navigation';
 
-export default function App() {
+const languages = {
+  en: 'English',
+  zh: '中文简体',
+};
+
+export default function App(locale: string) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   const menuItems = [
     { name: 'Feature', link: '#Feature' },
     { name: 'Pricing', link: '#Pricing' },
     { name: 'FAQ', link: '#FAQ' },
   ]
-  const changeLanguage = (lang:string) => {
-    console.log(lang)
+
+  const router = useRouter();
+
+  const changeLanguage = (lang: string) => {
+    router.push(`/${lang}`);
   };
 
   return (
@@ -46,12 +52,12 @@ export default function App() {
             <DropdownTrigger className="cursor-pointer">
               <Link color="foreground" className="hover:text-cyan-800">
                 <Image src="/icons/language.svg" alt="Avatar" width={24} height={24} />
-                <span>English</span>
+                <span>{languages[locale.locale]}</span>
               </Link>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="zh" onClick={()=>changeLanguage('zh')}>中文简体</DropdownItem>
-              <DropdownItem key="en" onClick={()=>changeLanguage('en')}>English</DropdownItem>
+              <DropdownItem key="zh" onClick={() => changeLanguage('zh')}>中文简体</DropdownItem>
+              <DropdownItem key="en" onClick={() => changeLanguage('en')}>English</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
